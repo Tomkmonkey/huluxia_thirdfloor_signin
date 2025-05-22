@@ -54,8 +54,8 @@ class HuluxiaSignin:
         notifier_type = os.getenv("NOTIFIER_TYPE", "none")  # 可选：wechat(企业微信机器人）、email(邮箱推送)、none(不发送通知)
         config = {
             "webhook_url": os.getenv("WECHAT_ROBOT_URL"),  # 企业微信机器人 Webhook 地址
-            "smtp_server": "smtp.163.com",  # SMTP 服务器地址 默认QQ邮箱
-            "port": 25  # SMTP 端口号
+            "smtp_server": "smtp.qq.com",  # SMTP 服务器地址 默认QQ邮箱
+            "port": 465  # SMTP 端口号
         }
         if notifier_type == "email":
             # 从环境变量获取邮箱配置
