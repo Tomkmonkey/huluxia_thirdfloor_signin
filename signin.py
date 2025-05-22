@@ -8,6 +8,53 @@ from logger import logger
 from notifier import get_notifier
 
 
+
+
+def sent_email(msg):
+    
+    import smtplib
+    from email.mime.text import MIMEText
+    from email.header import Header
+    from email.utils import formataddr
+
+    mail_host = "smtp.163.com"
+    mail_user = "mojinxin0001@163.com"
+    mail_pass = "CFTdQ6gz2uusca3q"  # 授权码
+
+    sender = mail_user
+    receivers = ['mojinxin2022@163.com']
+
+    message = MIMEText(msg, 'plain', 'utf-8')
+    message['From'] = formataddr((Header('SMTP助手', 'utf-8').encode(), sender))
+    message['To'] = formataddr((Header('用户名', 'utf-8').encode(), receivers[0]))
+    message['Subject'] = Header('原神自动签到结果', 'utf-8')
+
+    try:
+        smtpObj = smtplib.SMTP(mail_host, 25)
+        smtpObj.login(mail_user, mail_pass)
+        smtpObj.sendmail(sender, receivers, message.as_string())
+        smtpObj.quit()
+        print("邮件发送成功")
+    except smtplib.SMTPException as e:
+        print("Error: 无法发送邮件", e)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # 随机配置
 phone_brand_type_list = list(["MI", "Huawei", "UN", "OPPO", "VO"])  # 随机设备厂商
 device_code_random = random.randint(111, 987)  # 随机设备识别码
@@ -191,6 +238,8 @@ class HuluxiaSignin:
             all_messages = []  # 微信即时发送，清空聚合消息
         elif notifier_type == "email":  # 如果是邮箱通知，聚合消息
             all_messages = [initial_msg]
+        elif notifier_type == "163":
+            all_messages = [initial_msg]
         else:  # 不发送通知
             all_messages = []
 
@@ -263,5 +312,6 @@ class HuluxiaSignin:
         # 如果是邮箱通知，发送聚合后的所有消息
         if notifier_type == "email" and all_messages:
             self.notifier.send("\n\n".join(all_messages))
-        logger.info('测试')
+        logger.info('邮箱')
+        sent_email(all_messages)
 
