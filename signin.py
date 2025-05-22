@@ -238,10 +238,8 @@ class HuluxiaSignin:
             all_messages = []  # 微信即时发送，清空聚合消息
         elif notifier_type == "email":  # 如果是邮箱通知，聚合消息
             all_messages = [initial_msg]
-        elif notifier_type == "163":
-            all_messages = [initial_msg]
         else:  # 不发送通知
-            all_messages = []
+            all_messages = [initial_msg]
 
         total_exp = 0  # 记录总共获取的经验值
 
